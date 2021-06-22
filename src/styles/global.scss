@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--white-color);
+  color: #29292e;
+}
+
+body, input, button, textarea {
+  font: 400 16px 'Roboto', sans-serif;
+}
+
+:root {
+  --purple-color: #835afd;
+  --purple-light-color: #e559f9;
+  --white-color: #f8f8f8;
+  --grey-color: #a8a8b3;
+  --grey-light-color: #737388;
+  --red-color: #ea4335;
+
+  --title-font: 700 36px 'Poppins', sans-serif;
+}
