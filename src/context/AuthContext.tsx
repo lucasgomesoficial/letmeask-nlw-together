@@ -9,7 +9,8 @@ type User = {
 
 type AuthContextType = {
   user: User | undefined,
-  signInWithGoogle: () => Promise<void>
+  signInWithGoogle: () => Promise<void>,
+  singOut: () => Promise<void>
 }
 
 type AuthContextProviderProps = {
@@ -61,10 +62,16 @@ export const AuthContextProvider = (props: AuthContextProviderProps) => {
         avatar: photoURL
       })
     }
+
+    console.log(`${result.user?.displayName} logado`)
+  }
+
+  const singOut = async () => {
+    await auth.signOut()
   }
   
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle }}>
+    <AuthContext.Provider value={{ user, signInWithGoogle, singOut }}>
       {props.children}
     </AuthContext.Provider>
   );

@@ -1,15 +1,42 @@
-import { Link } from 'react-router-dom';
+import { FormEvent, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
 import illustrationImg from '../assets/images/illustration.svg';
 import logoImg from '../assets/images/logo.svg';
 
 import { Button } from '../components/Button';
-// import { useAuth } from '../hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
+import { database } from '../services/firebase';
 
 import '../styles/auth.scss';
 
 export const NewRoom = () => {
-  // const { user } = useAuth()
+  const history = useHistory();
+  const { user, singOut } = useAuth()
+  const [newRoom, setNewRoom] = useState('');
+  
+  const signOutAuth = async () => {
+    await singOut()
+    alert(`${user?.name} deslogado`)
+    history.push('/')
+  }
+
+  const handleCreateRoom = async(e: FormEvent) => {
+    e.preventDefault();
+
+    if (newRoom.trim() === '') {
+      return;
+    }
+
+    const roomRef = database.ref('rooms');
+
+    const firebaseRoom = await roomRef.push({
+      title: newRoom,
+      authorId: user?.id,
+    })
+
+    history.push(`/rooms/${firebaseRoom.key}`)
+  }
   
   return (
     <div id="page-auth">
@@ -22,10 +49,12 @@ export const NewRoom = () => {
         <div className="main-content">
           <img src={logoImg} alt="Letmeask" />
           <h2>Criar uma nova sala</h2>
-          <form>
+          <form onSubmit={handleCreateRoom}>
             <input
               type="text"
               placeholder="Digite o código da sala"
+              onChange={e => setNewRoom(e.target.value)}
+              value={newRoom}
             />
             <Button type="submit">
               Entrar na sala
@@ -34,6 +63,15 @@ export const NewRoom = () => {
           <p>
             Quer entrar em uma sala existente?
             <Link to="/">clique aqui</Link>
+          </p>
+          <p>
+            {user?.name}
+            <button 
+              onClick={signOutAuth}
+              className='buttonSignOut'
+            >
+              Sair
+            </button>
           </p>
         </div>
       </main>
