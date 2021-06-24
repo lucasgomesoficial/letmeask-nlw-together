@@ -14,12 +14,6 @@ export const NewRoom = () => {
   const history = useHistory();
   const { user, singOut } = useAuth()
   const [newRoom, setNewRoom] = useState('');
-  
-  const signOutAuth = async () => {
-    await singOut()
-    alert(`${user?.name} deslogado`)
-    history.push('/')
-  }
 
   const handleCreateRoom = async(e: FormEvent) => {
     e.preventDefault();
@@ -67,7 +61,7 @@ export const NewRoom = () => {
           <p>
             {user?.name}
             <button 
-              onClick={signOutAuth}
+              onClick={singOut}
               className='buttonSignOut'
             >
               Sair
