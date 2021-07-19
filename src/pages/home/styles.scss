@@ -91,6 +91,16 @@
     }
   }
 
+  .buttonSignOut {
+    margin-left: 5px;
+    background: transparent;
+    border: 0;
+    color: var(--purple-light-color);
+    text-decoration: underline;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
   .create-room {
     margin-top: 64px;
     height: 50px;
